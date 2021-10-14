@@ -12,6 +12,7 @@ First and foremost this document provides a consistent framework for thinking ab
 4. Intrepretor (Simulator)
 5. Environment (Oracle for real-time, real-world data)
 6. Camera (Generate race animation / UI)
+7. Championships
 
 Note: unless otherwise specified, units of measurement are in metric (kg for weight, cm for dimensions)
 
@@ -29,7 +30,7 @@ The algorithm that generates new cars, also known as the manufacturer, should be
   id: 1,
   owner: "0x00",
   manufacturer: {
-    algo: x // algorithm that generated the car
+    algo: x, // algorithm used to generate car, can be a contract
     contract: x // for minted cars
   },
   category: "S", // S,1,2,3,4,5,R
@@ -123,27 +124,30 @@ This is the program that takes cars, drivers, tracks and environment data to sim
 
 There will be an offical `NetRace Intrepretor` for the `NetRace Championship`, but anyone can make intrepretors for however they want to execute a race. Intrepretors are developed and improved over-time.
 
-In a sense, the intrepretor runs a simplified physics simulation. It calculates how different parameters affect the cars overall performance on a given frame in the track. In the simplest scenario, the intrepretor is called for every car at every frame, in each lap. It outputs how long it takes for each car to get through a given frame.
+In a sense, the intrepretor runs a simplified physics simulation. It calculates how different parameters affect the cars overall performance on a given frame in the track. In the simplest scenario, the intrepretor is called for every car at every frame, in each lap. It outputs how the car performs within the given parameters and conditions.
 
 ```js
 intrepretor(car, driver, track, frame, lap, time){
+  // the intrepretor receieves environment data from an oracle (based on time and track location)
   // logic used can differ per intrepretor
 
-  return time
+  return performance
 }
 ```
+
+**Performance**: We will think of performance as an integer between (0-10) that defines how many frames the car can move forward in one tick of the simulation. This means that the car may skip a few (0-10) frames per tick depending on its performance.
 
 The intrepretor can make use of an oracle to receieve real-time, real-world weather and enviroment data to enrich the race dynamics.
 
 ## Environment
 
-This is a separate service, or an Ethereum (?) Oracle to be more accurate, that provides trustable, real-world, real-time data to enrich races with. This adds an additional layer of randomness and an additional dynamic to Net racing.
+This is a separate service, possibly an Ethereum Oracle, that provides trustable, real-world, real-time data to enrich races. This provides an additional dynamic and some randomness to Net racing.
 
 ## Camera (front-end)
 
 A universal front-end that takes cars, tracks, drivers and intrepretors to generate a real-time visualization of the race. This is currently a react app that runs on the web.
 
-The front-end is unopionated and has no effect on the outcome of the race. It's just for interactivity.
+The front-end is unopionated and has no effect on the outcome of the race. It's meant to be a tool for visualizing races. 
 
 ```js
 cars = [{car: 1, driver: 1}]
@@ -152,3 +156,8 @@ camera(cars, track, intrepretor){
   returns [{car:1, frame: 2},...]
 }
 ```
+
+## Championships
+
+1. Open Net Racing Championship (allows synthetics cars + drivers)
+2. Minted Net Racing Championship (minted cars + drivers only)

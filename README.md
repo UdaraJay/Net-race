@@ -6,15 +6,21 @@ The Net Race is an internet racing event for virtual cars, drivers and tracks. T
 
 First and foremost this document provides a consistent framework for thinking about races. It is meant to be improved and developed by the community as needed.
 
-1. Car
-2. Driver
-3. Track
-4. Intrepretor (Simulator)
-5. Environment (Oracle for real-time, real-world data)
-6. Camera (Generate race animation / UI)
-7. Championships
+1. [Car](#car)
+2. [Driver](#driver)
+3. [Track](#track)
+4. [Intrepretor](#intrepretor) (Simulator)
+5. [Environment](#environment) (Oracle for real-time, real-world data)
+6. [Renderers](#renderer) (Generate race animation / UI)
+7. [Championships](#championships)
+8. Race rules
 
-Note: unless otherwise specified, units of measurement are in metric (kg for weight, cm for dimensions)
+Note: unless otherwise specified, units of measurement are in metric.
+
+- kg for weight
+- cm for physical dimensions
+- frames for track/lap length (represents distance)
+- frames per timestep (represents velocity)
 
 ## Car
 
@@ -120,19 +126,39 @@ Different tracks are made up of varying number of frames and varying numbers of 
 
 ## Intrepretor
 
-This is the program that takes cars, drivers, tracks and environment data to simulate the race and tell as the position of each car for every frame in each lap of the race. This information can be used to generate a real-time animation of the race.
+This is the program that takes `cars, drivers, tracks, environment` to simulate the race and return the `velocitym position, status` of each car for every step in the race. 
+
+This information can also be used by the `renderer` to generate a real-time animation of the race.
 
 There will be an offical `NetRace Intrepretor` for the `NetRace Championship`, but anyone can make intrepretors for however they want to execute a race. Intrepretors are developed and improved over-time.
 
-In a sense, the intrepretor runs a simplified physics simulation. It calculates how different parameters affect the cars overall performance on a given frame in the track. In the simplest scenario, the intrepretor is called for every car at every frame, in each lap. It outputs how the car performs within the given parameters and conditions.
+In a sense, the intrepretor runs a physics simulation. It calculates the cars overall performance on a given frame in the track. 
 
 ```js
-intrepretor(car, driver, track, frame, lap, time){
-  // the intrepretor receieves environment data from an oracle (based on time and track location)
-  // logic used can differ per intrepretor
+// setup the intrepretor
+intrepretor = Intrepretor({
+  timestep: 1000,
+  track: Track
+  environment: Oracle,
+})
 
-  return performance
-}
+// add racers
+intrepretor.add({car, driver})
+
+// simulate for 1 frame
+result = intrepretor.step()
+```
+
+The intrepretor uses an integrator (verlet for now) as it steps through the simulation to calculate to resulting forces that are carried onto the next step.
+
+```js
+// update the velocities and positions of all cars according to timestep dt
+
+return {
+  velocities: (cars, dt) {},
+  positions: (cars, dt) {},
+  statuses: (cars, dt) {} // collisons, tyre wear etc.
+};
 ```
 
 **Performance**: We will think of performance as an integer between (0-10) that defines how many frames the car can move forward in one tick of the simulation. This means that the car may skip a few (0-10) frames per tick depending on its performance.
@@ -143,7 +169,7 @@ The intrepretor can make use of an oracle to receieve real-time, real-world weat
 
 This is a separate service, possibly an Ethereum Oracle, that provides trustable, real-world, real-time data to enrich races. This provides an additional dynamic and some randomness to Net racing.
 
-## Camera (front-end)
+## Renderer
 
 A universal front-end that takes cars, tracks, drivers and intrepretors to generate a real-time visualization of the race. This is currently a react app that runs on the web.
 

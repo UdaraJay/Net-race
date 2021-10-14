@@ -1,0 +1,21 @@
+{
+  "id": "1",
+  "name": "",
+  "owner": "0x00",
+  "category": "S",
+  "weight": 1020,
+  "weightUnit": "kg",
+  "dimensionsUnit": "cm",
+  "height": 93,
+  "width": 170,
+  "length": 570,
+  "powerScore": 1,
+  "aerodynamicScore": 1,
+  "accelerationScore": 1,
+  "decelerationScoreScore": 1,
+  "maxSpeed": 120,
+  "design": {
+    "artwork": "ipfs/url",
+    "cutout": "ipfs/url"
+  }
+}

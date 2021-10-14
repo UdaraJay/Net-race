@@ -1,0 +1,15 @@
+{
+  "name": "original",
+  "totalFrames": 60,
+  "frames": [
+    {
+      "frame": 1,
+      "complexityMultiplier": 1,
+      "errorMultiplier": 0,
+      "experienceBonus": 1
+    },
+    { "frame": 2, "complexityMultiplier": 1, "errorMultiplier": 0 },
+    { "frame": 3, "complexityMultiplier": 1, "errorMultiplier": 0 },
+    { "frame": 4, "complexityMultiplier": 1, "errorMultiplier": 0 }
+  ]
+}

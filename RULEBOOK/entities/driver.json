@@ -1,0 +1,14 @@
+{
+  "id": "1",
+  "name": "",
+  "owner": "0x00",
+  "license": "",
+  "performance": 1,
+  "reputation": 1,
+  "errorRate": 1,
+  "riskRate": 1,
+  "design": {
+    "artwork": "ipfs/url",
+    "cutout": "ipfs/url"
+  }
+}

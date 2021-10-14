@@ -71,6 +71,35 @@ S (super): 0.06
 R (rare): 0.04
 ```
 
+### How cars are generated
+
+```js
+// input: user wallet address
+seed = walletAddress 
+
+// eg. if the 3rd character of walletAddress is the letter 's', category = super (S)
+// There might be neater ways to do this [?]
+category = getCategory(seed, criteria)
+categroy
+```
+
+The categories define bands for each parameter. For example, the max and min power the car needs to be. 
+
+> Parameters banded by category include: `weight`, `power`, `accelerationScore`, `decelerationScore`, `aerodynamicScore` and `maxSpeed`.
+
+```js
+// use category and other [criteria] to define all of the parameters on the car.
+generateCarFromCategory(seed, category) {
+  car = useCriteria(seed)
+  car = category(car)
+
+  // fix the car since some properties need to be a certain 
+  // way to make sense. 
+  car = garage(car)
+  car
+} 
+```
+
 ## Driver
 
 Drivers have several traits that act as modifiers on the cars and their performance on track. Every player is entitled to one unique driver generated from their wallet adddress.

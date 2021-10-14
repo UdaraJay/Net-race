@@ -14,6 +14,7 @@ First and foremost this document provides a consistent framework for thinking ab
 6. [Renderers](#renderer) (Generate race animation / UI)
 7. [Championships](#championships)
 8. Race rules
+9. Things to work towards
 
 Note: unless otherwise specified, units of measurement are in metric.
 
@@ -31,7 +32,6 @@ The algorithm that generates new cars, also known as the manufacturer, should be
 
 ```js
 // Car
-
 {
   id: 1,
   owner: "0x00",
@@ -61,7 +61,6 @@ The algorithm that generates new cars, also known as the manufacturer, should be
 
 ```js
 // Car Categories & probability
-
 S (super): 0.06
 1: 0.1
 2: 0.2
@@ -88,17 +87,20 @@ The categories define bands for each parameter. For example, the max and min pow
 > Parameters banded by category include: `weight`, `power`, `accelerationScore`, `decelerationScore`, `aerodynamicScore` and `maxSpeed`.
 
 ```js
-// use category and other [criteria] to define all of the parameters on the car.
+// use category and other [criteria] to define all of the parameters on the car
 generateCarFromCategory(seed, category) {
   car = useCriteria(seed)
   car = category(car)
 
   // fix the car since some properties need to be a certain 
-  // way to make sense. 
+  // way to make sense
   car = garage(car)
   car
 } 
 ```
+
+### 🪙 NFT
+Cars generated 
 
 ## Driver
 
@@ -190,9 +192,7 @@ return {
 };
 ```
 
-**Performance**: We will think of performance as an integer between (0-10) that defines how many frames the car can move forward in one tick of the simulation. This means that the car may skip a few (0-10) frames per tick depending on its performance.
-
-The intrepretor can make use of an oracle to receieve real-time, real-world weather and enviroment data to enrich the race dynamics.
+The intrepretor can make use of an oracle to receive real-time, real-world, weather and enviroment data to enrich the race dynamics.
 
 ## Environment
 
@@ -216,3 +216,5 @@ camera(cars, track, intrepretor){
 
 1. Open Net Racing Championship (allows synthetics cars + drivers)
 2. Minted Net Racing Championship (minted cars + drivers only)
+
+## Things to work towards

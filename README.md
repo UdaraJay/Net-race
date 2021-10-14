@@ -99,8 +99,12 @@ generateCarFromCategory(seed, category) {
 } 
 ```
 
-### 🪙 NFT
-Cars generated 
+### NFT
+Cars that are generated can also be minted through a contract. Inorder the to do this, the contract must implement the same algorithm used to generate the car. 
+
+> This algorithm should be open-source, and deployed such that it can be inherited from or called by other contracts.
+
+There can be many reasons one should mint a car through a specific contract: you may do it as payment for entry to a race event or to simply make the car a collectible and sell/auction/display it. 
 
 ## Driver
 

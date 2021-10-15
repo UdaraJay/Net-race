@@ -1,6 +1,6 @@
 # Net Racing Rulebook
 
-> The Web 3 Racing Championship.
+> The Web 3 Racing Championship || [Discord](https://discord.gg/sF87MU7kXn)
 
 The Net Race is an internet racing event for virtual cars, drivers and tracks. This rulebook defines how these races work, and the rules and specifications that makeup the championship and ecosystem.
 
@@ -30,16 +30,18 @@ Cars are generated based on the user's wallet address as a seed value. Every pla
 
 The algorithm that generates new cars, also known as the manufacturer, should be a pure function, such that it always generates the same car given a wallet address.
 
+The specification for cars and drivers should be exhaustive. They must allow for a wide range of games and other use cases. They must also allow for some properties that can be programmed by the owner.
+
 ```js
 // Car
 {
   id: 1,
-  owner: "0x00",
+  owner: User,
   manufacturer: {
     algo: x, // algorithm used to generate car, can be a contract
     contract: x // for minted cars
   },
-  category: "S", // S,1,2,3,4,5,R
+  category: "S", // S,1,2,3,4,5,R,O
   weight: 1020, // kg
   height: 93, // cm
   width: 170, // cm
@@ -48,26 +50,42 @@ The algorithm that generates new cars, also known as the manufacturer, should be
   aerodynamicScore: 1, // 0.00 - 1.00
   accelerationScore: 1, // 0.00 - 1.00
   decelerationScore: 1, // 0.00 - 1.00
+  armor: 150, // 0-200
   maxSpeed: 120,
   design: {
     // artwork can be created by anyone
     artwork: "ipfs/url",
     cutout: "ipfs/url",
-    designer: 0x00,
+    designer: User,
     designerRoyalty: 5 // %
+  },
+  team:{
+    manager: User
+    engineer: User
+    other: [
+      { 
+        role: String,
+        user: User
+      },
+    ]
   }
 }
 ```
 
+> In the case of both cars and drivers, the artwork/design that represents them are upto the owner or creator. This may lead to unrealistic and unpredictable designs for cars and drivers, the hope is that the community recognizes the value of designs complementing the specifications of the car. Designs for cars can be unique assets that are also tradeable.
+
+> Given cars and drivers can be bought/sold/traded, designers can receieve a royalty for their designs in such transactions.
+
 ```js
 // Car Categories & probability
-S (super): 0.06
+S (super): 0.05
 1: 0.1
 2: 0.2
 3: 0.3
 4: 0.2
 5: 0.1
-R (rare): 0.04
+R (rare): 0.05
+O (originals): 0.00// custom cars, could be a 1-time NFT collection
 ```
 
 ### How cars are generated
@@ -102,15 +120,15 @@ generateCarFromCategory(seed, category) {
 ### NFT
 Cars that are generated can also be minted through a contract. Inorder the to do this, the contract must implement the same algorithm used to generate the car. 
 
-> This algorithm should be open-source, and deployed such that it can be inherited from or called by other contracts.
+> This algorithm should be public, and deployed such that it can be inherited from or called by other contracts.
 
 There can be many reasons one should mint a car through a specific contract: you may do it as payment for entry to a race event or to simply make the car a collectible and sell/auction/display it.
 
 ```solidity
 // pseudo random number using walletAddress and manufacturer
- function random(address walletAddress, string memory manufacturer) internal pure returns (uint256) {
-        return uint256(keccak256(abi.encodePacked(manufacturer, abi.encodePacked(walletAddress))));
-    }
+function random(address walletAddress, string memory manufacturer) internal pure returns (uint256) {
+  return uint256(keccak256(abi.encodePacked(manufacturer, abi.encodePacked(walletAddress))));
+}
 ```
 
 ## Driver
@@ -135,10 +153,9 @@ Drivers have several traits that act as modifiers on the cars and their performa
   }
 }
 ```
+Drivers can be combined with any car, this means that the driver and car may be owned by different players. Therefore, games run by contracts could split prizes between drivers and cars. I would propose 30:70 - driver:car.
 
-> In the case of both cars and drivers, the artwork/design that represents them are upto the owner or creator. This may lead to unrealistic and unpredictable designs for cars and drivers, the hope is that the community recognizes the value of designs complementing the specifications of the car. Designs for cars can be unique assets that are also tradeable.
-
-> Given cars and drivers can be bought/sold/traded, designers can receieve a royalty for their designs in such transactions.
+> Higer reward for cars given they come with a **team**, who can act as pit crew, engineering team or garage crew for cars depending on the game they're in. 
 
 ## Track
 
@@ -174,7 +191,9 @@ This information can also be used by the `renderer` to generate a real-time anim
 
 There will be an offical `NetRace Intrepretor` for the `NetRace Championship`, but anyone can make intrepretors for however they want to execute a race. Intrepretors are developed and improved over-time.
 
-In a sense, the intrepretor runs a physics simulation. It calculates the cars overall performance on a given frame in the track. 
+In a sense, the intrepretor runs a physics simulation. It calculates the car's overall performance on a given frame in the track.
+
+> This can include interesting logic for collisons, damage and performance taxes when two cars end up on the same frame. This is where car parameters like width, weight and armor will come handy. 
 
 ```js
 // setup the intrepretor

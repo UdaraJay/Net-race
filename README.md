@@ -104,7 +104,14 @@ Cars that are generated can also be minted through a contract. Inorder the to do
 
 > This algorithm should be open-source, and deployed such that it can be inherited from or called by other contracts.
 
-There can be many reasons one should mint a car through a specific contract: you may do it as payment for entry to a race event or to simply make the car a collectible and sell/auction/display it. 
+There can be many reasons one should mint a car through a specific contract: you may do it as payment for entry to a race event or to simply make the car a collectible and sell/auction/display it.
+
+```solidity
+// pseudo random number using walletAddress and manufacturer
+ function random(address walletAddress, string memory manufacturer) internal pure returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(manufacturer, abi.encodePacked(walletAddress))));
+    }
+```
 
 ## Driver
 

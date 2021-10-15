@@ -1,6 +1,6 @@
 # Net Racing Rulebook
 
-> The Web 3 Racing Championship || [Discord](https://discord.gg/sF87MU7kXn)
+> The Web 3 Racing Championship • [Discord](https://discord.gg/sF87MU7kXn)
 
 The Net Race is an internet racing event for virtual cars, drivers and tracks. This rulebook defines how these races work, and the rules and specifications that makeup the championship and ecosystem.
 

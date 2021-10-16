@@ -2,6 +2,7 @@ class Team {
   car;
   driver;
   position;
+  
   constructor(car, driver) {
     this.car = car;
     this.driver = driver;

@@ -1,0 +1,40 @@
+.track {
+  display: flex;
+  max-width: 600px;
+  overflow-x: scroll;
+  min-height: 500px;
+  padding-top: 50px;
+  padding-left: 100px;
+  background: #e2e2e2;
+  border-radius: 4px;
+}
+
+.lap {
+  position: relative;
+  display: flex;
+  // width: 100px;
+  border-right: 1px solid #999;
+
+  .label {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    text-transform: uppercase;
+    font-size: 0.85em;
+  }
+}
+
+.frame {
+  position: relative;
+  width: 10px;
+  border-left: 1px solid #ddd;
+  padding-top: 60px;
+
+  .car {
+    img {
+      position: absolute;
+      min-width: 100px;
+      height: 40px;
+    }
+  }
+}

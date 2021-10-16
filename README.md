@@ -2,6 +2,8 @@
 
 > The Web 3 Racing Championship • [Discord](https://discord.gg/sF87MU7kXn)
 
+![](./demo.gif)
+
 The Net Race is an internet racing event for virtual cars, drivers and tracks. This rulebook defines how these races work, and the rules and specifications that makeup the championship and ecosystem.
 
 First and foremost this document provides a consistent framework for thinking about races. It is meant to be improved and developed by the community as needed.
@@ -48,8 +50,6 @@ The specification for cars and drivers should be exhaustive. They must allow for
   length: 570, // cm
   powerScore: 1, // 0.00 - 1.00
   aerodynamicScore: 1, // 0.00 - 1.00
-  accelerationScore: 1, // 0.00 - 1.00
-  decelerationScore: 1, // 0.00 - 1.00
   armor: 150, // 0-200
   maxSpeed: 120,
   design: {
@@ -63,7 +63,7 @@ The specification for cars and drivers should be exhaustive. They must allow for
     manager: User
     engineer: User
     other: [
-      { 
+      {
         role: String,
         user: User
       },
@@ -92,15 +92,15 @@ O (originals): 0.00// custom cars, could be a 1-time NFT collection
 
 ```js
 // input: user wallet address
-seed = walletAddress 
+seed = walletAddress;
 
 // eg. if the 3rd character of walletAddress is the letter 's', category = super (S)
 // There might be neater ways to do this [?]
-category = getCategory(seed, criteria)
-categroy
+category = getCategory(seed, criteria);
+categroy;
 ```
 
-The categories define bands for each parameter. For example, the max and min power the car needs to be. 
+The categories define bands for each parameter. For example, the max and min power the car needs to be.
 
 > Parameters banded by category include: `weight`, `power`, `accelerationScore`, `decelerationScore`, `aerodynamicScore` and `maxSpeed`.
 
@@ -110,15 +110,16 @@ generateCarFromCategory(seed, category) {
   car = useCriteria(seed)
   car = category(car)
 
-  // fix the car since some properties need to be a certain 
+  // fix the car since some properties need to be a certain
   // way to make sense
   car = garage(car)
   car
-} 
+}
 ```
 
 ### NFT
-Cars that are generated can also be minted through a contract. Inorder the to do this, the contract must implement the same algorithm used to generate the car. 
+
+Cars that are generated can also be minted through a contract. Inorder the to do this, the contract must implement the same algorithm used to generate the car.
 
 > This algorithm should be public, and deployed such that it can be inherited from or called by other contracts.
 
@@ -153,9 +154,10 @@ Drivers have several traits that act as modifiers on the cars and their performa
   }
 }
 ```
+
 Drivers can be combined with any car, this means that the driver and car may be owned by different players. Therefore, games run by contracts could split prizes between drivers and cars. I would propose 30:70 - driver:car.
 
-> Higer reward for cars given they come with a **team**, who can act as pit crew, engineering team or garage crew for cars depending on the game they're in. 
+> Higer reward for cars given they come with a **team**, who can act as pit crew, engineering team or garage crew for cars depending on the game they're in.
 
 ## Track
 
@@ -179,13 +181,14 @@ Each frame of the track can have variations in properties that affect the perfor
   ]
 }
 ```
-> Each frame can be thought of as a discrete instance of the race. 
 
-Different tracks are made up of varying number of frames and varying numbers of laps per race. The community if free to develop and extend tracks however they want. 
+> Each frame can be thought of as a discrete instance of the race.
+
+Different tracks are made up of varying number of frames and varying numbers of laps per race. The community if free to develop and extend tracks however they want.
 
 ## Intrepretor
 
-This is the program that takes `cars, drivers, tracks, environment` to simulate the race and return the `velocitym position, status` of each car for every step in the race. 
+This is the program that takes `cars, drivers, tracks, environment` to simulate the race and return the `velocitym position, status` of each car for every step in the race.
 
 This information can also be used by the `renderer` to generate a real-time animation of the race.
 
@@ -193,7 +196,7 @@ There will be an offical `NetRace Intrepretor` for the `NetRace Championship`, b
 
 In a sense, the intrepretor runs a physics simulation. It calculates the car's overall performance on a given frame in the track.
 
-> This can include interesting logic for collisons, damage and performance taxes when two cars end up on the same frame. This is where car parameters like width, weight and armor will come handy. 
+> This can include interesting logic for collisons, damage and performance taxes when two cars end up on the same frame. This is where car parameters like width, weight and armor will come handy.
 
 ```js
 // setup the intrepretor
@@ -232,7 +235,7 @@ This is a separate service, possibly an Ethereum Oracle, that provides trustable
 
 A universal front-end that takes cars, tracks, drivers and intrepretors to generate a real-time visualization of the race. This is currently a react app that runs on the web.
 
-The front-end is unopionated and has no effect on the outcome of the race. It's meant to be a tool for visualizing races. 
+The front-end is unopionated and has no effect on the outcome of the race. It's meant to be a tool for visualizing races.
 
 ```js
 cars = [{car: 1, driver: 1}]
